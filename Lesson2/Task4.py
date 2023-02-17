@@ -7,3 +7,17 @@
 import numpy as np
 from math import factorial
 
+def probability_color(n, k, n1, k1):
+    return 1 - (np.math.factorial(n) // (np.math.factorial(n - k))) \
+           / (np.math.factorial(n1) // (np.math.factorial(n1 - k1)))
+
+
+def probability(n, k, n1, k1):
+    return 1 - (np.math.factorial(n) // (np.math.factorial(n - k))) \
+           / (np.math.factorial(n1) // (np.math.factorial(n1 - k1)))
+
+
+res = probability(9, 2, 11, 2)
+result = probability_color(7, 2, 10, 2)
+print(f"Probability: {result:.2f}")
+print(f"Probability: {res:.2f}")
