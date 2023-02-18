@@ -13,4 +13,4 @@ def probability_heads(p, n, k):
 
 probadility(144, 70)
 result = probability_heads(0.5, 144, 70)
-print(f"Probability heads:{result:.3f}")
+print(f"Probability heads:{result:.6f}")

@@ -15,5 +15,7 @@ def probability_burned(p, n, k):
     return C_kn * (p**k) * (1 - p)**(n - k)
 
 probadility(5000, 2)
-result = probability_burned(0.0004, 5000, 2)
-print(f"Probability burned:{result:.2f}")
+result1 = probability_burned(0.0004, 5000, 0)
+result2 = probability_burned(0.0004, 5000, 2)
+print(f"Probability burned:{result1:.2f}")
+print(f"Probability burned:{result2:.2f}")
