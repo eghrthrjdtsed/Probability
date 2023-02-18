@@ -7,17 +7,30 @@
 import numpy as np
 from math import factorial
 
-def probability_color(n, k, n1, k1):
-    return 1 - (np.math.factorial(n) // (np.math.factorial(n - k))) \
-           / (np.math.factorial(n1) // (np.math.factorial(n1 - k1)))
 
 
-def probability(n, k, n1, k1):
-    return 1 - (np.math.factorial(n) // (np.math.factorial(n - k))) \
-           / (np.math.factorial(n1) // (np.math.factorial(n1 - k1)))
+# все мячи белые
+def probability_all_white(n, k, n1, k1):
+    return (np.math.factorial(n) // (np.math.factorial(k) * np.math.factorial(n - k))) \
+        / (np.math.factorial(n1) // (np.math.factorial(k1) * np.math.factorial(n1 - k1)))
+
+# ровно два мяча белые
+def probability_exactly_two_white(n, k, n1, k1):
+    return (np.math.factorial(n) // (np.math.factorial(k) * np.math.factorial(n - k))) \
+        / (np.math.factorial(n1) // (np.math.factorial(k1) * np.math.factorial(n1 - k1))) 
+    
+                 
+
+# хотя бы один мяч белый
+def probability_least_one_white(n, k, n1, k1):
+    return 1 - (np.math.factorial(n) // (np.math.factorial(k) * np.math.factorial(n - k))) \
+        / (np.math.factorial(n1) // (np.math.factorial(k1) * np.math.factorial(n1 - k1))) 
 
 
-res = probability(9, 2, 11, 2)
-result = probability_color(7, 2, 10, 2)
-print(f"Probability: {result:.2f}")
-print(f"Probability: {res:.2f}")
+result1 = probability_all_white(16, 4, 21, 4)
+result2 = probability_exactly_two_white(16, 2, 21, 4)
+result3 = probability_least_one_white(16, 4, 21, 4)
+
+print(f"probability_all_white: {result1:.4f}")
+print(f"probability_exactly_two_white: {result2:.8f}")
+print(f"probability_least_one_white: {result3:.4f}")
