@@ -9,7 +9,7 @@ import numpy as np
 
 
 #a) a = M(x)
-a = 2
+a = - 2
 print(f"M(x): {a}")
 #б) D(x) = sigma**2
 d = pow(4, 2)
