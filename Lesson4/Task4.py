@@ -29,10 +29,10 @@ print(f"g): {g}")
 d = stats.norm.cdf(190, loc = 174, scale = 8) - stats.norm.cdf(158, loc = 174, scale = 8)
 print(f"d): {d}")
 
-e = stats.norm.cdf(150, loc = 174, scale = 8) 
+e = 1 -  stats.norm.cdf(190, loc = 174, scale = 8)  + stats.norm.cdf(150, loc = 174, scale = 8)
 print(f"e): {e}")
 
-y = 1 - stats.norm.cdf(198, loc = 174, scale = 8) 
+y = 1 -  stats.norm.cdf(198, loc = 174, scale = 8)  + stats.norm.cdf(150, loc = 174, scale = 8) 
 print(f"y): {y}")
 
 j =  stats.norm.cdf(166, loc = 174, scale = 8) 
