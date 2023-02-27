@@ -10,20 +10,29 @@ from scipy import stats
 import numpy as np
 
 
-def testing_the_hypothesis(x1, x_mean, n, std):
-    return (x_mean - x1) / np.sqrt(std / n + std / n)
+def testing_the_hypothesis(mu, x_mean, n, sigma):
+    return (x_mean - mu) / (sigma / np.sqrt(n))
 
-x1 = 200
-x2 = np.array([202, 203, 199, 197, 195, 201, 200, 204, 194, 190])
-x_mean = np.mean(x2)
-std = np.var(x2, ddof=1)
-n = len(x2)
+
+mu = 200
 alpha = 0.01
-# d = np.sqrt(std)
-t1 = stats.norm.ppf(1 - alpha)
-# t1 = stats.t.ppf(alpha, df = n - 1)
-result = testing_the_hypothesis(x1, x_mean, n, std)
+samples = np.array([202, 203, 199, 197, 195, 201, 200, 204, 194, 190])
+
+x_mean = samples.mean()
+print(x_mean)
+sigma = samples.std(ddof=1)
+print(sigma)
+
+n = len(samples)
+print(n)
+
+t1 = stats.t.ppf(alpha / 2, df = n-1)
+t2 = stats.t.ppf(1 - alpha / 2, df = n - 1)
+print(f" t1 = {t1}, t2 = {t2}")
+
+result = testing_the_hypothesis(mu, x_mean, n, sigma)
 print(f"Observable: {result}")
-print(f"critical: {t1}")
 
-
+# Критическая область (- inf, -3.25), (3.25, inf)
+# t не принадлежит критической области, гипотеза H0 не отвергается на уровне значимости 0.01
+# утверждение продавца верно, средний вес пачки действительно сосавляет 200г

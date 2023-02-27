@@ -15,10 +15,12 @@ x2 = 17
 n = 100
 std = np.sqrt(4)
 alpha = 0.05
+
 t1 = stats.norm.ppf(1 - alpha)
-# t1 = stats.t.ppf(1 - alpha, df = n - 1)
 result = testing_the_hypothesis(x1, x2, n, std)
 print(f"Observable: {result}")
 print(f"critical: {t1}")
 
-
+# критическая область (1.64, inf)
+# Z принадлежит критической области, гипотеза H0 отвергается с вероятностью ошибки 0.025
+# -> средний диаметр подшипников больше 17мм
