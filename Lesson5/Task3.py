@@ -26,9 +26,9 @@ print(sigma)
 n = len(samples)
 print(n)
 
-t1 = stats.t.ppf(alpha / 2, df = n-1)
+t1 = stats.t.ppf(alpha / 2, df = n - 1)
 t2 = stats.t.ppf(1 - alpha / 2, df = n - 1)
-print(f" t1 = {t1}, t2 = {t2}")
+print(f"t1 = {t1}, t2 = {t2}")
 
 result = testing_the_hypothesis(mu, x_mean, n, sigma)
 print(f"Observable: {result}")
