@@ -15,62 +15,42 @@ import statsmodels.api as sm
 
 zp = np.array([35, 45, 190, 200, 40, 70, 54, 150, 120, 110])
 ks = np.array([401, 574, 874, 919, 459, 739, 653, 902, 746, 832])
+n = 10
 
-x = zp.reshape(10, 1)
-y = ks.reshape(10, 1)
+b1 = (n*np.sum(zp*ks) - np.sum(zp)*np.sum(ks)) / \
+    (n*np.sum(zp**2) - np.sum(zp)**2)
 
-model = LinearRegression()
-# x = zp.reshape(-1, 1)
-model.fit(x, y)
-r_sq = model.score(x, y) #Коэффициент детерминации
-print(f"R-squared: {r_sq}")
+#по второму способу
+b1_1 = (np.mean(zp*ks) - np.mean(zp)*np.mean(ks)) / \
+    (np.mean(zp**2) - np.mean(zp)**2)
 
-# x = sm.add_constant(x)
-# model = sm.OLS(y, x)
-# result = model.fit()
-# print(result.summary())
-
-const = model.intercept_ #Подбираем коэффициенты
-beta = model.coef_[0]
-print(f"intercept: {const}") #Выводим интерцепт
-print(f"coef: {beta}") #Выводим коэффициент
-
-x_x = np.hstack([np.ones((10, 1)), x])
-print(x_x) #Матричный метод расчета коэффициентов линейной регрессии
-
-b = np.dot(np.linalg.inv(np.dot(x_x.T, x_x)), x_x.T @ y)
-print(b) #Так же выводим коэффициенты
-
-# B1 = (np.mean(zp * ks) - np.mean(zp) * np.mean(ks)) / (np.mean(zp **2) - np.mean(zp) ** 2)
-# print(f"B1: {B1}") #Выводим коэффициент
-
-# B0 = np.mean(ks) - B1 * np.mean(zp)
-# print(f"B0: {B0}") #Выводим интерцепт
-
-'''Посчитать коэффициент линейной регрессии при заработной плате (zp), используя градиентный спуск (без intercept).'''
+b0 = np.mean(ks) - b1*np.mean(zp)
 
 
-# def mse_(B1, y, x, n = 10):
-#     return np.sum((B1*x - y)**2) / n
-# alpha = 1e-6
-# B1 = 0.1
-# n = 10
-# for i in range(450):
-#     B1 -= alpha * (2/n) * np.sum((B1 * x - y) * x) #mse
-#     print('B1 = {}'.format(B1))
-    
-# print()
-# B0 = 0.1
-# for i in range(450):
-#     B0 -= alpha * (2/n) * np.sum((B0 * x - y) * x)
-#     print('B0 = {}'.format(B0))
+ks_pred = b0 + b1 * zp
+print(b1, b1_1, b0, ks_pred)
 
+def mse_(B1, y = ks, x = zp, n = 10):
+    return np.sum((B1*x - y)**2)/n
 
-plt.scatter(x, y)
-plt.plot(x, beta * x + const, 'g' )
-plt.title(f"r2 = {round(r_sq, 3)}")
-plt.xlabel('x')
-plt.ylabel('y')
-plt.show()
+alpha = 1e-6
+B1 = 0.1
 
-# На 78.8 % зарплата влияет на значения крединого скоринга 
+for i in range (3000):
+    B1 -= alpha * (2/n) * np.sum ((B1 * zp - ks) * zp)
+    if i % 500 == 0:
+        print ('Iteration = {i}, B1 = {B1}, mse = {mse}'.format(i = i, B1 = B1, mse = mse_(B1)))
+
+def mse_1(B1, B0, y = ks, x = zp, n = 10):
+    return np.sum((B0 + B1*x - y)**2)/n
+
+alpha = 1e-6
+B0 = 0.1
+B1 = 0.1
+
+for i in range (3000):
+    B1 -= alpha * (2/n) * np.sum ((B0 + B1 * zp - ks) * zp)
+    B0 -= alpha * (2/n) * np.sum ((B0 + B1 * zp - ks) * zp)
+    if i % 500 == 0:
+        print ('Iteration = {i}, B1 = {B1}, B0 = {B0}, mse = {mse}'.format(i = i, B1 = B1, B0 = B0, mse = mse_1(B1, B0)))
+
